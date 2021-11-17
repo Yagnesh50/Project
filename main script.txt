@@ -1,0 +1,19 @@
+#1 Standardization and Normalization of data
+st.markdown("### Data Transformation")
+stand = st.selectbox("Select the data transformation technique to be implemented",("Select","Standardization","Normalization"))
+scaling_feature=[feature for feature in dataset.columns if feature not in ['Id','SalePerice'] ]
+if stand == "Standardization":
+    scaler=MinMaxScaler()
+    scaler.fit(dataset[scaling_feature])
+    scaler.transform(dataset[scaling_feature])
+    data = pd.concat([dataset[['Id', 'SalePrice']].reset_index(drop=True),
+                        pd.DataFrame(scaler.transform(dataset[scaling_feature]), columns=scaling_feature)],
+                        axis=1)
+
+if stand == "Normalization":
+    scaler=StandardScaler()
+    scaler.fit(dataset[scaling_feature])
+    scaler.transform(dataset[scaling_feature])
+    data = pd.concat([dataset[['Id', 'SalePrice']].reset_index(drop=True),
+                        pd.DataFrame(scaler.transform(dataset[scaling_feature]), columns=scaling_feature)],
+                        axis=1)
